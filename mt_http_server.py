@@ -30,27 +30,25 @@ while True:
     try:
         message = connection_socket.recv(1024).decode()
         f = open(file_name)
-        outputdata = f.read()
+        output_data = f.read()
         f.close()
-        
+
         # send HTTP header line
-        okHeaderLine = "HTTP/1.1 200 OK\r\n"
-        connection_socket.send(okHeaderLine.encode())
+        ok_header = "HTTP/1.1 200 OK\r\n"
+        connection_socket.send(ok_header.encode())
 
         # send the file content
-        for c in outputdata:
+        for c in output_data:
             connection_socket.send(c.encode())
 
         connection_socket.send("\r\n".encode())
 
-        print(f"http://{server_ip}:{server_port}{file_name}")
+        print(f"link: http://{server_ip}:{server_port}{file_name}")
         connection_socket.close()
 
     except IOError:
-        errorHeaderLine = "HTTP/1.1 404 Not Found"
-
-        connection_socket.send(errorHeaderLine.encode())
-        connection_socket.send("\r\n".encode())
+        error_header = "HTTP/1.1 404 Not Found\r\n\r\n"
+        connection_socket.send(error_header.encode())
 
         connection_socket.close()
 
