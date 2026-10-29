@@ -18,11 +18,12 @@ while True:
 
     try:
         message = connectionSocket.recv(1024).decode()
+        print(message)
         filename = message.split()[1]
         f = open(filename[1:])
         outputdata = f.read()
         f.close()
-        
+
         # send HTTP header line
         okHeaderLine = "HTTP/1.1 200 OK\r\n"
         connectionSocket.send(okHeaderLine.encode())
@@ -33,7 +34,7 @@ while True:
 
         connectionSocket.send("\r\n".encode())
 
-        print(f"http://{SERVER_IP}:{SERVER_PORT}{filename}")
+        print(f"available at: http://{SERVER_IP}:{SERVER_PORT}{filename}")
         connectionSocket.close()
 
     except IOError:

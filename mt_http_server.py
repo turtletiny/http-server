@@ -13,14 +13,12 @@ if len(args) < 4:
     sys.exit()
 
 server_ip = args[1]
-server_port = args[2]
+server_port = int(args[2])
 file_name = args[3]
 
 server_socket = socket(AF_INET, SOCK_STREAM)
 server_socket.bind((server_ip, server_port))
 server_socket.listen(1)
-
-print(f"Running at Port: {server_port}, IP: {server_ip}")
 
 while True:
     print("Ready to serve...")
