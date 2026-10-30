@@ -21,7 +21,6 @@ while True:
 
     try:
         message = connectionSocket.recv(1024).decode()
-        time.sleep(5)
         print(message)
         filename = message.split()[1]
         f = open(filename[1:])
