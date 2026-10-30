@@ -1,3 +1,4 @@
+from socket import *
 import sys
 
 MAX_PORT = 65535
@@ -19,3 +20,5 @@ if server_port < 0 or server_port > MAX_PORT:
     print(f"Port number must between 0 and {MAX_PORT}")
     sys.exit()
 
+
+client_socket = socket(AF_INET, SOCK_STREAM)
