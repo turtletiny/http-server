@@ -1,7 +1,8 @@
 from socket import *
 import sys
+import time
 
-SERVER_PORT = 80 
+SERVER_PORT = 8080
 SERVER_IP = "192.168.0.133"
 
 # Prepare a server socket
@@ -20,6 +21,7 @@ while True:
 
     try:
         message = connectionSocket.recv(1024).decode()
+        time.sleep(5)
         print(message)
         filename = message.split()[1]
         f = open(filename[1:])

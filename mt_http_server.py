@@ -5,14 +5,12 @@ import threading
 
 SERVER_PORT = 6969
 SERVER_IP = "192.168.0.133"
-MAX_THREADS = 5
 
 server_socket = socket(AF_INET, SOCK_STREAM)
 server_socket.bind((SERVER_IP, SERVER_PORT))
 server_socket.listen()
 
-def init_thread():
-    (connection_socket, addr) = server_socket.accept()
+def serve_client():
 
     try:
         message = connection_socket.recv(1024).decode()
@@ -40,17 +38,18 @@ def init_thread():
 
         connection_socket.close()
 
-threads: list[threading.Thread] = []
 
-count = 1
-
+# main loop
+client_count = 1
 while True:
-    print(count)
-    count += 1
 
-    thread = threading.Thread(target=init_thread)
+    print(client_count)
+    (connection_socket, _addr) = server_socket.accept()
+
+    thread = threading.Thread(target=serve_client)
     thread.start()
-    thread.join()
+
+    client_count += 1
 
 
 server_socket.close()
