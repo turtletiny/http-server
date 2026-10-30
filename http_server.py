@@ -1,7 +1,7 @@
 from socket import *
 import sys
 
-SERVER_PORT = 6969
+SERVER_PORT = 80 
 SERVER_IP = "192.168.0.133"
 
 # Prepare a server socket
@@ -10,6 +10,8 @@ serverSocket.bind((SERVER_IP, SERVER_PORT))
 serverSocket.listen(1)
 
 print(f"Running at Port: {SERVER_PORT}, IP: {SERVER_IP}")
+
+
 
 while True:
     #Establish a connection

@@ -11,25 +11,8 @@ server_socket = socket(AF_INET, SOCK_STREAM)
 server_socket.bind((SERVER_IP, SERVER_PORT))
 server_socket.listen()
 
-threads: list[threading.Thread] = []
-sockets: list[socket] = []
-
-def init_thread(idx: int):
-    sockets.append(server_socket.accept()[0])
-
-
-# init threads
-for i in range(MAX_THREADS):
-    thread = threading.Thread(target=init_thread, args=(i,))
-    threads.append(thread)
-
-threads_used = 0
-
-while True:
-
-    print(f"Sockets used: {threads_used}/{MAX_THREADS}")
-
-    (connection_socket, port) = server_socket.accept()
+def init_thread():
+    (connection_socket, addr) = server_socket.accept()
 
     try:
         message = connection_socket.recv(1024).decode()
@@ -56,6 +39,19 @@ while True:
         connection_socket.send(error_header.encode())
 
         connection_socket.close()
+
+threads: list[threading.Thread] = []
+
+count = 1
+
+while True:
+    print(count)
+    count += 1
+
+    thread = threading.Thread(target=init_thread)
+    thread.start()
+    thread.join()
+
 
 server_socket.close()
 sys.exit()
