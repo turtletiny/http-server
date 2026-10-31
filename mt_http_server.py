@@ -12,7 +12,6 @@ server_socket.bind((SERVER_IP, SERVER_PORT))
 server_socket.listen()
 
 def serve_client(connection_socket: socket):
-    time.sleep(3)
 
     try:
         message = connection_socket.recv(1024).decode()
@@ -43,7 +42,7 @@ while True:
     thread = threading.Thread(target=serve_client, args=(connection_socket,))
     thread.start()
 
-    print(client_count)
+    print(f"client {client_count} served")
     client_count += 1
 
 
