@@ -39,7 +39,8 @@ client_socket.send(query_msg.encode())
 response_msg = client_socket.recv(1024).decode()
 print(response_msg)
 
-print(client_socket.recv(1024).decode())
+msg = client_socket.recv(1024).decode()
+print(msg)
 
 client_socket.close()
 
