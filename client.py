@@ -9,7 +9,7 @@ args = sys.argv
 # client.py server_host server_port filename 
 
 if len(args) < 4:
-    print(f"Usage: {args[0]} <HOST> <PORT> <FILENAME> [CLIENTNAME]")
+    print(f"Usage: python {args[0]} <HOST> <PORT> <FILENAME> [CLIENTNAME]")
     print("<> = required")
     print("[] = optional")
 
