@@ -3,7 +3,6 @@ import sys
 import threading
 import time
 
-
 SERVER_PORT = 6969
 SERVER_IP = "192.168.0.133"
 
@@ -20,7 +19,7 @@ def serve_client(connection_socket: socket):
         output_data = f.read()
         f.close()
 
-        ok_header = "HTTP/1.1 200 OK\r\n"
+        ok_header = "HTTP/1.1 200 OK\r\n\r\n"
         response = ok_header + output_data + "\r\n"
         connection_socket.send(response.encode())
 
@@ -44,7 +43,6 @@ while True:
 
     print(f"client {client_count} served")
     client_count += 1
-
 
 server_socket.close()
 sys.exit()

@@ -9,7 +9,7 @@ args = sys.argv
 # client.py server_host server_port filename 
 
 if len(args) < 4:
-    print(f"Usage: python {args[0]} <HOST> <PORT> <FILENAME> [CLIENTNAME]")
+    print(f"Usage: {args[0]} <HOST> <PORT> <FILENAME> [CLIENTNAME]")
     print("<> = required")
     print("[] = optional")
 
@@ -35,22 +35,21 @@ client_socket = socket(AF_INET, SOCK_STREAM)
 client_socket.connect((server_ip, server_port))
 
 query_msg = f"""
-    GET /{file_name} HTTP/1.1\r\n
-    Host: 192.168.0.133:6969\r\n
-    User-Agent: {client_name} \r\n
-    Accept: text/html\r\n
-    Accept-Language: en-US,en;q=0.9\r\n
-    Connection: keep-alive\r\n
-    \r\n
-    """
+GET /{file_name} HTTP/1.1\r\n
+Host: 192.168.0.133:6969\r\n
+User-Agent: {client_name} \r\n
+Accept: text/html\r\n
+Accept-Language: en-US,en;q=0.9\r\n
+Connection: keep-alive\r\n
+\r\n
+"""
 
 client_socket.send(query_msg.encode())
+print("Sent query:")
 print(query_msg)
 
 response_msg = client_socket.recv(1024).decode()
+print("Received response: ")
 print(response_msg)
-
-msg = client_socket.recv(1024).decode()
-print(msg)
 
 client_socket.close()

@@ -12,8 +12,6 @@ serverSocket.listen(1)
 
 print(f"Running at Port: {SERVER_PORT}, IP: {SERVER_IP}")
 
-
-
 while True:
     #Establish a connection
     print("Ready to serve...")
