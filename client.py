@@ -36,7 +36,7 @@ client_socket.connect((server_ip, server_port))
 
 query_msg = f"""
 GET /{file_name} HTTP/1.1\r
-Host: 192.168.0.133:6969\r
+Host: 192.168.0.133:8080\r
 User-Agent: {client_name} \r
 Accept: text/html\r
 Accept-Language: en-US,en;q=0.9\r
