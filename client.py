@@ -35,12 +35,12 @@ client_socket = socket(AF_INET, SOCK_STREAM)
 client_socket.connect((server_ip, server_port))
 
 query_msg = f"""
-GET /{file_name} HTTP/1.1\r\n
-Host: 192.168.0.133:6969\r\n
-User-Agent: {client_name} \r\n
-Accept: text/html\r\n
-Accept-Language: en-US,en;q=0.9\r\n
-Connection: keep-alive\r\n
+GET /{file_name} HTTP/1.1\r
+Host: 192.168.0.133:6969\r
+User-Agent: {client_name} \r
+Accept: text/html\r
+Accept-Language: en-US,en;q=0.9\r
+Connection: keep-alive\r
 \r\n
 """
 
