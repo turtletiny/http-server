@@ -1,51 +1,56 @@
 from socket import *
 import sys
+import threading
 import time
 
 SERVER_PORT = 8080
 SERVER_IP = "192.168.0.133"
 
-# Prepare a server socket
-serverSocket = socket(AF_INET, SOCK_STREAM)
-serverSocket.bind((SERVER_IP, SERVER_PORT))
-serverSocket.listen(5)
+server_socket = socket(AF_INET, SOCK_STREAM)
+server_socket.bind((SERVER_IP, SERVER_PORT))
+server_socket.listen()
 
-print(f"Running at Port: {SERVER_PORT}, IP: {SERVER_IP}")
+# main loop
+print(f"Listening at {SERVER_IP}, Port {SERVER_PORT}...")
 
-while True:
-    #Establish a connection
-    print("Ready to serve...")
-    connectionSocket, addr = serverSocket.accept()
+client_count = 0
 
+def serve_client(connection_socket: socket):
     try:
-        message = connectionSocket.recv(1024).decode()
-        print(message)
-        filename = message.split()[1]
-        f = open(filename[1:])
-        outputdata = f.read()
+        message = connection_socket.recv(1024).decode()
+        file_name = message.split()[1]
+        f = open(file_name[1:])
+        output_data = f.read()
         f.close()
 
-        # send HTTP header line
-        okHeaderLine = "HTTP/1.1 200 OK\r\n\r\n"
-        connectionSocket.send(okHeaderLine.encode())
+        ok_header = "HTTP/1.1 200 OK\r\n\r\n"
+        response = ok_header + output_data + "\r\n"
+        connection_socket.send(response.encode())
 
-        # send the file content
-        for c in outputdata:
-            connectionSocket.send(c.encode())
+        print(f"Client number {client_count} served at IP: {SERVER_IP} | Port:{SERVER_PORT}")
 
-        connectionSocket.send("\r\n".encode())
-
-        print(f"available at: http://{SERVER_IP}:{SERVER_PORT}{filename}")
-        connectionSocket.close()
+        connection_socket.close()
 
     except IOError:
-        errorHeaderLine = "HTTP/1.1 404 Not Found\r\n\r\n"
+        error_header = "HTTP/1.1 404 Not Found\r\n\r\n"
+        connection_socket.send(error_header.encode())
 
-        connectionSocket.send(errorHeaderLine.encode())
-        connectionSocket.send("\r\n".encode())
+        print(f"Client number {client_count} returned 404")
+        connection_socket.close()
 
-        connectionSocket.close()
+while True:
+    (connection_socket, _addr) = server_socket.accept()
 
-serverSocket.close()
+    thread = threading.Thread(target=serve_client, args=(connection_socket,))
+    thread.start()
+    client_count += 1
+
+
+server_socket.close()
 sys.exit()
+
+
+
+
+
 
