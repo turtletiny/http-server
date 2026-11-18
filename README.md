@@ -1,6 +1,6 @@
 # HTTP Server
 
-A multi-threaded HTTP server written in Rust (std only, no dependencies), with a Python client for testing. Was originally written in Python, rewritten in Rust.
+A multi-threaded HTTP server written in Rust (std only, no dependencies), with a Python client for testing. Was originally written in Python, re
 
 The server listens on `127.0.0.1:7878` and uses a fixed-size thread pool (4 workers) to handle connections concurrently.
 
